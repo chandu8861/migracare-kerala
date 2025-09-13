@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MigraCare - Healthcare Management System</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <!-- Login Screen -->
+    <div id="loginScreen" class="login-screen">
+        <div class="login-container">
+            <div class="login-header">
+                <h1 data-translate="appTitle">MigraCare</h1>
+                <p data-translate="appSubtitle">Healthcare Management for Migrant Workers</p>
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label" data-translate="language">Language</label>
+                <select id="languageSelect" class="form-control">
+                    <option value="en">English</option>
+                    <option value="hi">हिंदी (Hindi)</option>
+                    <option value="kn">ಕನ್ನಡ (Kannada)</option>
+                    <option value="ml">മലയാളം (Malayalam)</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label" data-translate="role">Your Role</label>
+                <select id="roleSelect" class="form-control">
+                    <option value="migrant" data-translate="migrantWorker">Migrant Worker</option>
+                    <option value="government" data-translate="governmentOfficial">Government Official</option>
+                    <option value="healthcare" data-translate="healthcareWorker">Healthcare Worker</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label" data-translate="userId">User ID</label>
+                <input type="text" id="userIdInput" class="form-control" value="MW-1001" placeholder="Enter your ID">
+            </div>
+
+            <div class="form-group">
+                <label class="form-label" data-translate="passcode">4-Digit Passcode</label>
+                <div class="passcode-inputs">
+                    <input type="password" maxlength="1" class="passcode-digit" data-index="0">
+                    <input type="password" maxlength="1" class="passcode-digit" data-index="1">
+                    <input type="password" maxlength="1" class="passcode-digit" data-index="2">
+                    <input type="password" maxlength="1" class="passcode-digit" data-index="3">
+                </div>
+            </div>
+
+            <button type="button" id="loginBtn" class="btn btn--primary btn--full-width" data-translate="login">Login</button>
+            
+            <div class="login-links">
+                <a href="#" data-translate="forgotPasscode">Forgot Passcode?</a>
+                <a href="#" data-translate="newRegistration">New User Registration</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Application -->
+    <div id="mainApp" class="main-app hidden">
+        <!-- Header -->
+        <header class="app-header">
+            <div class="header-content">
+                <h2 id="headerTitle" data-translate="appTitle">MigraCare</h2>
+                <div class="header-actions">
+                    <button type="button" id="speakerBtn" class="speaker-btn">🔊</button>
+                    <button type="button" id="logoutBtn" class="btn btn--outline btn--sm" data-translate="logout">Logout</button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Navigation Tabs -->
+        <nav class="tab-navigation">
+            <div id="migrantTabs" class="tab-container hidden">
+                <button type="button" class="tab-btn active" data-tab="profile" data-translate="profile">Profile</button>
+                <button type="button" class="tab-btn" data-tab="health" data-translate="health">Health</button>
+                <button type="button" class="tab-btn" data-tab="healthcare" data-translate="healthcare">Healthcare</button>
+                <button type="button" class="tab-btn" data-tab="schemes" data-translate="schemes">Schemes</button>
+                <button type="button" class="tab-btn" data-tab="settings" data-translate="settings">Settings</button>
+            </div>
+            <div id="governmentTabs" class="tab-container hidden">
+                <button type="button" class="tab-btn active" data-tab="dashboard" data-translate="dashboard">Dashboard</button>
+                <button type="button" class="tab-btn" data-tab="analytics">Analytics</button>
+                <button type="button" class="tab-btn" data-tab="search">Search</button>
+                <button type="button" class="tab-btn" data-tab="settings" data-translate="settings">Settings</button>
+            </div>
+            <div id="healthcareTabs" class="tab-container hidden">
+                <button type="button" class="tab-btn active" data-tab="patients">Patients</button>
+                <button type="button" class="tab-btn" data-tab="update">Update Records</button>
+                <button type="button" class="tab-btn" data-tab="settings" data-translate="settings">Settings</button>
+            </div>
+        </nav>
+
+        <!-- Content Area -->
+        <main class="app-content">
+            <!-- Migrant Worker Interface -->
+            <div id="migrantInterface" class="interface hidden">
+                <!-- Profile Tab -->
+                <div id="profileTab" class="tab-content active">
+                    <div class="welcome-section">
+                        <h3><span data-translate="welcome">Welcome</span>, Rajesh Kumar <span class="tts-icon" onclick="speakText('Welcome Rajesh Kumar')">🔊</span></h3>
+                        <p class="user-id">ID: MW-1001</p>
+                    </div>
+                    
+                    <div class="info-cards">
+                        <div class="card">
+                            <div class="card__body">
+                                <h4><span data-translate="personalDetails">Personal Details</span> <span class="tts-icon" onclick="speakText('Personal Details')">🔊</span></h4>
+                                <div class="detail-row">
+                                    <span>Contact: <span class="tts-icon" onclick="speakText('Contact')">🔊</span></span>
+                                    <span>+91 9876543210</span>
+                                </div>
+                                <div class="detail-row">
+                                    <span>Origin: <span class="tts-icon" onclick="speakText('Origin')">🔊</span></span>
+                                    <span>West Bengal</span>
+                                </div>
+                                <div class="detail-row">
+                                    <span>Profession: <span class="tts-icon" onclick="speakText('Profession')">🔊</span></span>
+                                    <span>Construction Worker</span>
+                                </div>
+                                <div class="detail-row">
+                                    <span>Experience: <span class="tts-icon" onclick="speakText('Experience')">🔊</span></span>
+                                    <span>5 years</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <div class="card__body">
+                                <h4><span data-translate="workDetails">Work Details</span> <span class="tts-icon" onclick="speakText('Work Details')">🔊</span></h4>
+                                <div class="detail-row">
+                                    <span>Status: <span class="tts-icon" onclick="speakText('Status')">🔊</span></span>
+                                    <span class="status status--success">Currently Working</span>
+                                </div>
+                                <div class="detail-row">
+                                    <span>Place: <span class="tts-icon" onclick="speakText('Place')">🔊</span></span>
+                                    <span>Ernakulam District</span>
+                                </div>
+                                <div class="detail-row">
+                                    <span>Work Type: <span class="tts-icon" onclick="speakText('Work Type')">🔊</span></span>
+                                    <span>Building Construction</span>
+                                </div>
+                                <div class="detail-row">
+                                    <span>Employer: <span class="tts-icon" onclick="speakText('Employer')">🔊</span></span>
+                                    <span>Kerala Infrastructure Ltd (Private)</span>
+                                </div>
+                                <div class="detail-row">
+                                    <span>Duration: <span class="tts-icon" onclick="speakText('Duration')">🔊</span></span>
+                                    <span>18 months</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Health Tab -->
+                <div id="healthTab" class="tab-content">
+                    <div class="health-overview">
+                        <div class="health-basic">
+                            <h4><span data-translate="basicHealthInfo">Basic Health Information</span> <span class="tts-icon" onclick="speakText('Basic Health Information')">🔊</span></h4>
+                            <div class="health-details">
+                                <div class="detail-item">
+                                    <span>Name: <span class="tts-icon" onclick="speakText('Name')">🔊</span></span> 
+                                    <span>Rajesh Kumar</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span>Age: <span class="tts-icon" onclick="speakText('Age')">🔊</span></span> 
+                                    <span>28 years</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span>Gender: <span class="tts-icon" onclick="speakText('Gender')">🔊</span></span> 
+                                    <span>Male</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span>Blood Type: <span class="tts-icon" onclick="speakText('Blood Type')">🔊</span></span> 
+                                    <span>B+</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="health-score-container">
+                            <h4><span data-translate="healthScore">Health Score</span> <span class="tts-icon" onclick="speakText('Health Score')">🔊</span></h4>
+                            <div class="chart-container" style="position: relative; height: 200px;">
+                                <canvas id="healthScoreChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="chart-container" style="position: relative; height: 300px;">
+                        <h4><span data-translate="medicalHistory">Medical History</span> Trends <span class="tts-icon" onclick="speakText('Medical History Trends')">🔊</span></h4>
+                        <canvas id="healthHistoryChart"></canvas>
+                    </div>
+
+                    <div class="vaccination-status">
+                        <h4><span data-translate="vaccinationStatus">Vaccination Status</span> <span class="tts-icon" onclick="speakText('Vaccination Status')">🔊</span></h4>
+                        <div class="status status--success">Fully Vaccinated</div>
+                        <p>Last Checkup: August 15, 2024 at PHC Perumbavoor <span class="tts-icon" onclick="speakText('Last Checkup August 15 2024 at PHC Perumbavoor')">🔊</span></p>
+                        <div class="qr-code">
+                            <div class="qr-placeholder">📱 QR Code for Medical Report <span class="tts-icon" onclick="speakText('QR Code for Medical Report')">🔊</span></div>
+                        </div>
+                    </div>
+
+                    <div class="medical-history">
+                        <h4>Detailed <span data-translate="medicalHistory">Medical History</span> <span class="tts-icon" onclick="speakText('Detailed Medical History')">🔊</span></h4>
+                        <div class="history-list">
+                            <div class="history-item">
+                                <div class="history-date">Aug 15, 2024 <span class="tts-icon" onclick="speakText('August 15 2024')">🔊</span></div>
+                                <div class="history-condition">Skin Infection - Treated <span class="tts-icon" onclick="speakText('Skin Infection Treated')">🔊</span></div>
+                                <div class="history-provider">PHC Perumbavoor <span class="tts-icon" onclick="speakText('PHC Perumbavoor')">🔊</span></div>
+                            </div>
+                            <div class="history-item">
+                                <div class="history-date">Jun 22, 2024 <span class="tts-icon" onclick="speakText('June 22 2024')">🔊</span></div>
+                                <div class="history-condition">Work Injury - Hand Cut <span class="tts-icon" onclick="speakText('Work Injury Hand Cut')">🔊</span></div>
+                                <div class="history-provider">General Hospital <span class="tts-icon" onclick="speakText('General Hospital')">🔊</span></div>
+                            </div>
+                            <div class="history-item">
+                                <div class="history-date">Apr 10, 2024 <span class="tts-icon" onclick="speakText('April 10 2024')">🔊</span></div>
+                                <div class="history-condition">Respiratory Check - Normal <span class="tts-icon" onclick="speakText('Respiratory Check Normal')">🔊</span></div>
+                                <div class="history-provider">Mobile Health Unit <span class="tts-icon" onclick="speakText('Mobile Health Unit')">🔊</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Healthcare Tab -->
+                <div id="healthcareTab" class="tab-content">
+                    <div class="map-placeholder">
+                        <div class="map-box">🗺️ Map View - <span data-translate="nearbyHospitals">Nearby Hospitals</span> <span class="tts-icon" onclick="speakText('Map View Nearby Healthcare Facilities')">🔊</span></div>
+                    </div>
+
+                    <div class="hospital-list">
+                        <h4><span data-translate="nearbyHospitals">Nearby Hospitals</span> <span class="tts-icon" onclick="speakText('Nearby Hospitals')">🔊</span></h4>
+                        <div class="hospital-item">
+                            <div class="hospital-info">
+                                <h5>General Hospital Ernakulam <span class="tts-icon" onclick="speakText('General Hospital Ernakulam')">🔊</span></h5>
+                                <p>Type: Government | Distance: 2.3 km <span class="tts-icon" onclick="speakText('Type Government Distance 2.3 kilometers')">🔊</span></p>
+                                <p>Contact: 0484-2369000 <span class="tts-icon" onclick="speakText('Contact 0484 2369000')">🔊</span></p>
+                            </div>
+                        </div>
+                        <div class="hospital-item">
+                            <div class="hospital-info">
+                                <h5>Medical College Hospital <span class="tts-icon" onclick="speakText('Medical College Hospital')">🔊</span></h5>
+                                <p>Type: Government | Distance: 3.1 km <span class="tts-icon" onclick="speakText('Type Government Distance 3.1 kilometers')">🔊</span></p>
+                                <p>Contact: 0484-2359134 <span class="tts-icon" onclick="speakText('Contact 0484 2359134')">🔊</span></p>
+                            </div>
+                        </div>
+                        <div class="hospital-item">
+                            <div class="hospital-info">
+                                <h5>KIMS Hospital <span class="tts-icon" onclick="speakText('KIMS Hospital')">🔊</span></h5>
+                                <p>Type: Private | Distance: 1.8 km <span class="tts-icon" onclick="speakText('Type Private Distance 1.8 kilometers')">🔊</span></p>
+                                <p>Contact: 0484-2669000 <span class="tts-icon" onclick="speakText('Contact 0484 2669000')">🔊</span></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="emergency-contacts">
+                        <h4><span data-translate="emergencyNumbers">Emergency Numbers</span> <span class="tts-icon" onclick="speakText('Emergency Numbers')">🔊</span></h4>
+                        <div class="emergency-grid">
+                            <div class="emergency-item">
+                                <span class="emergency-icon">🚑</span>
+                                <div>
+                                    <strong><span data-translate="ambulance">Ambulance</span> <span class="tts-icon" onclick="speakText('Ambulance')">🔊</span></strong>
+                                    <p>108 <span class="tts-icon" onclick="speakText('108')">🔊</span></p>
+                                </div>
+                            </div>
+                            <div class="emergency-item">
+                                <span class="emergency-icon">👮</span>
+                                <div>
+                                    <strong><span data-translate="police">Police</span> <span class="tts-icon" onclick="speakText('Police')">🔊</span></strong>
+                                    <p>100 <span class="tts-icon" onclick="speakText('100')">🔊</span></p>
+                                </div>
+                            </div>
+                            <div class="emergency-item">
+                                <span class="emergency-icon">🚨</span>
+                                <div>
+                                    <strong><span data-translate="disaster">Disaster Helpline</span> <span class="tts-icon" onclick="speakText('Disaster Helpline')">🔊</span></strong>
+                                    <p>1077 <span class="tts-icon" onclick="speakText('1077')">🔊</span></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Schemes Tab -->
+                <div id="schemesTab" class="tab-content">
+                    <h3><span data-translate="governmentSchemes">Government Schemes</span> <span class="tts-icon" onclick="speakText('Government Schemes')">🔊</span></h3>
+                    <div class="schemes-grid">
+                        <div class="scheme-card">
+                            <h4>Awaz Health Insurance <span class="tts-icon" onclick="speakText('Awaz Health Insurance')">🔊</span></h4>
+                            <p>Coverage: ₹15,000 medical + ₹2 lakh accident <span class="tts-icon" onclick="speakText('Coverage 15000 rupees medical plus 2 lakh rupees accident')">🔊</span></p>
+                            <p>Eligibility: All migrant workers 18-60 years <span class="tts-icon" onclick="speakText('Eligibility All migrant workers 18 to 60 years')">🔊</span></p>
+                            <button type="button" class="btn btn--primary btn--sm">Apply Now</button>
+                        </div>
+                        <div class="scheme-card">
+                            <h4>Apna Ghar Scheme <span class="tts-icon" onclick="speakText('Apna Ghar Scheme')">🔊</span></h4>
+                            <p>Coverage: Residential facilities <span class="tts-icon" onclick="speakText('Coverage Residential facilities')">🔊</span></p>
+                            <p>Eligibility: Long-term migrant workers <span class="tts-icon" onclick="speakText('Eligibility Long term migrant workers')">🔊</span></p>
+                            <button type="button" class="btn btn--primary btn--sm">Learn More</button>
+                        </div>
+                        <div class="scheme-card">
+                            <h4>Hamara Malayalam <span class="tts-icon" onclick="speakText('Hamara Malayalam')">🔊</span></h4>
+                            <p>Coverage: Language training program <span class="tts-icon" onclick="speakText('Coverage Language training program')">🔊</span></p>
+                            <p>Eligibility: All migrant workers <span class="tts-icon" onclick="speakText('Eligibility All migrant workers')">🔊</span></p>
+                            <button type="button" class="btn btn--primary btn--sm">Enroll</button>
+                        </div>
+                        <div class="scheme-card">
+                            <h4>ABHA Health Card <span class="tts-icon" onclick="speakText('ABHA Health Card')">🔊</span></h4>
+                            <p>Coverage: Digital health ID <span class="tts-icon" onclick="speakText('Coverage Digital health ID')">🔊</span></p>
+                            <p>Eligibility: All Indian residents <span class="tts-icon" onclick="speakText('Eligibility All Indian residents')">🔊</span></p>
+                            <button type="button" class="btn btn--primary btn--sm">Get Card</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Settings Tab -->
+                <div id="settingsTab" class="tab-content">
+                    <h3><span data-translate="settings">Settings</span> <span class="tts-icon" onclick="speakText('Settings')">🔊</span></h3>
+                    <div class="settings-form">
+                        <div class="form-group">
+                            <label class="form-label"><span data-translate="changePasscode">Change Passcode</span> <span class="tts-icon" onclick="speakText('Change Passcode')">🔊</span></label>
+                            <input type="password" class="form-control" placeholder="New 4-digit passcode">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label"><span data-translate="updateEmail">Update Email</span> <span class="tts-icon" onclick="speakText('Update Email')">🔊</span></label>
+                            <input type="email" class="form-control" value="rajesh.kumar@example.com">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label"><span data-translate="updateContact">Update Contact</span> <span class="tts-icon" onclick="speakText('Update Contact')">🔊</span></label>
+                            <input type="tel" class="form-control" value="+91 9876543210">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label"><span data-translate="languagePreferences">Language Preferences</span> <span class="tts-icon" onclick="speakText('Language Preferences')">🔊</span></label>
+                            <select class="form-control" id="settingsLanguageSelect">
+                                <option value="en">English</option>
+                                <option value="hi">हिंदी (Hindi)</option>
+                                <option value="kn">ಕನ್ನಡ (Kannada)</option>
+                                <option value="ml">മലയാളം (Malayalam)</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label"><span data-translate="notificationSettings">Notification Settings</span> <span class="tts-icon" onclick="speakText('Notification Settings')">🔊</span></label>
+                            <select class="form-control">
+                                <option>All Notifications</option>
+                                <option>Emergency Only</option>
+                                <option>Disabled</option>
+                            </select>
+                        </div>
+                        <button type="button" class="btn btn--primary">Update Settings</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Government Official Interface -->
+            <div id="governmentInterface" class="interface hidden">
+                <!-- Dashboard Tab -->
+                <div id="dashboardTab" class="tab-content active">
+                    <h3>Kerala Migrant Worker Analytics <span data-translate="dashboard">Dashboard</span></h3>
+                    
+                    <div class="metrics-grid">
+                        <div class="metric-card">
+                            <h4>31,00,000</h4>
+                            <p><span data-translate="totalWorkers">Total Workers</span></p>
+                        </div>
+                        <div class="metric-card">
+                            <h4>47</h4>
+                            <p><span data-translate="diseaseAlerts">Disease Alerts</span></p>
+                        </div>
+                        <div class="metric-card">
+                            <h4>78%</h4>
+                            <p><span data-translate="avgHealthScore">Average Health Score</span></p>
+                        </div>
+                        <div class="metric-card">
+                            <h4>14</h4>
+                            <p><span data-translate="districtsCovered">Districts Covered</span></p>
+                        </div>
+                    </div>
+
+                    <div class="charts-grid">
+                        <div class="chart-container" style="position: relative; height: 400px;">
+                            <h4>Worker Distribution by District</h4>
+                            <canvas id="districtChart"></canvas>
+                        </div>
+                        <div class="chart-container" style="position: relative; height: 400px;">
+                            <h4>Origin State Distribution</h4>
+                            <canvas id="originChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Analytics Tab -->
+                <div id="analyticsTab" class="tab-content">
+                    <h3>Health Analytics & Disease Trends</h3>
+                    
+                    <div class="charts-grid">
+                        <div class="chart-container" style="position: relative; height: 400px;">
+                            <h4>Age & Gender Demographics</h4>
+                            <canvas id="demographicsChart"></canvas>
+                        </div>
+                        <div class="chart-container" style="position: relative; height: 400px;">
+                            <h4>Disease Trends Over Time</h4>
+                            <canvas id="diseaseTrendsChart"></canvas>
+                        </div>
+                    </div>
+
+                    <div class="disease-alerts">
+                        <h4>Current Disease Alerts</h4>
+                        <div class="alert-list">
+                            <div class="alert-item status--warning">
+                                <strong>Respiratory Issues Increasing</strong>
+                                <p>Ernakulam District - 12 new cases this week</p>
+                            </div>
+                            <div class="alert-item status--error">
+                                <strong>Skin Infection Outbreak</strong>
+                                <p>Wayanad District - Immediate attention required</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Search Tab -->
+                <div id="searchTab" class="tab-content">
+                    <h3>Individual Worker Search</h3>
+                    <div class="search-form">
+                        <div class="form-group">
+                            <label class="form-label">Worker ID</label>
+                            <input type="text" id="searchWorkerId" class="form-control" placeholder="Enter Worker ID (e.g., MW-1001)">
+                        </div>
+                        <button type="button" id="searchWorkerBtn" class="btn btn--primary"><span data-translate="searchWorker">Search Worker</span></button>
+                    </div>
+                    
+                    <div id="searchResults" class="search-results hidden">
+                        <div class="worker-profile">
+                            <h4>Worker Profile</h4>
+                            <div class="profile-details">
+                                <p><strong>Name:</strong> <span id="workerName"></span></p>
+                                <p><strong>Age:</strong> <span id="workerAge"></span></p>
+                                <p><strong>Origin:</strong> <span id="workerOrigin"></span></p>
+                                <p><strong>Current Status:</strong> <span id="workerStatus"></span></p>
+                                <p><strong>Health Score:</strong> <span id="workerHealth"></span></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Government Settings Tab -->
+                <div id="govSettingsTab" class="tab-content">
+                    <h3><span data-translate="settings">Settings</span></h3>
+                    <div class="settings-form">
+                        <div class="form-group">
+                            <label class="form-label"><span data-translate="changePasscode">Change Passcode</span></label>
+                            <input type="password" class="form-control" placeholder="New 4-digit passcode">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label"><span data-translate="updateEmail">Update Email</span></label>
+                            <input type="email" class="form-control" value="gov.official@kerala.gov.in">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label"><span data-translate="updateContact">Update Contact</span></label>
+                            <input type="tel" class="form-control" value="+91 9876543200">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label"><span data-translate="languagePreferences">Language Preferences</span></label>
+                            <select class="form-control" id="govLanguageSelect">
+                                <option value="en">English</option>
+                                <option value="hi">हिंदी (Hindi)</option>
+                                <option value="kn">ಕನ್ನಡ (Kannada)</option>
+                                <option value="ml">മലയാളം (Malayalam)</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label"><span data-translate="notificationSettings">Notification Settings</span></label>
+                            <select class="form-control">
+                                <option>All Alerts</option>
+                                <option>Critical Only</option>
+                                <option>Disabled</option>
+                            </select>
+                        </div>
+                        <button type="button" class="btn btn--primary">Update Settings</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Healthcare Worker Interface -->
+            <div id="healthcareInterface" class="interface hidden">
+                <!-- Patients Tab -->
+                <div id="patientsTab" class="tab-content active">
+                    <h3>Patient Management</h3>
+                    <div class="patient-search">
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Search by Worker ID or Name">
+                        </div>
+                        <button type="button" class="btn btn--primary">Search Patient</button>
+                    </div>
+                    
+                    <div class="recent-patients">
+                        <h4>Recent Patients</h4>
+                        <div class="patient-list">
+                            <div class="patient-item">
+                                <div class="patient-info">
+                                    <h5>Rajesh Kumar (MW-1001)</h5>
+                                    <p>Last visit: Aug 15, 2024 | Condition: Skin Infection</p>
+                                </div>
+                                <button type="button" class="btn btn--outline btn--sm">View Details</button>
+                            </div>
+                            <div class="patient-item">
+                                <div class="patient-info">
+                                    <h5>Amit Singh (MW-1002)</h5>
+                                    <p>Last visit: Aug 12, 2024 | Condition: Respiratory Check</p>
+                                </div>
+                                <button type="button" class="btn btn--outline btn--sm">View Details</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Update Records Tab -->
+                <div id="updateTab" class="tab-content">
+                    <h3><span data-translate="updateHealthData">Update Health Data</span></h3>
+                    <div class="update-form">
+                        <div class="form-group">
+                            <label class="form-label">Worker ID</label>
+                            <input type="text" class="form-control" placeholder="Enter Worker ID">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Worker Name</label>
+                            <input type="text" class="form-control" placeholder="Enter Worker Name">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Diagnosis</label>
+                            <textarea class="form-control" rows="3" placeholder="Enter diagnosis and treatment details"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Treatment</label>
+                            <textarea class="form-control" rows="3" placeholder="Enter treatment provided"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Upload Documents</label>
+                            <input type="file" class="form-control" multiple accept=".pdf,.jpg,.png">
+                        </div>
+                        <button type="button" class="btn btn--primary">Update Records</button>
+                    </div>
+                </div>
+
+                <!-- Healthcare Settings Tab -->
+                <div id="hcSettingsTab" class="tab-content">
+                    <h3><span data-translate="settings">Settings</span></h3>
+                    <div class="settings-form">
+                        <div class="form-group">
+                            <label class="form-label"><span data-translate="changePasscode">Change Passcode</span></label>
+                            <input type="password" class="form-control" placeholder="New 4-digit passcode">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label"><span data-translate="updateEmail">Update Email</span></label>
+                            <input type="email" class="form-control" value="healthcare.worker@hospital.com">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label"><span data-translate="updateContact">Update Contact</span></label>
+                            <input type="tel" class="form-control" value="+91 9876543300">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label"><span data-translate="languagePreferences">Language Preferences</span></label>
+                            <select class="form-control" id="hcLanguageSelect">
+                                <option value="en">English</option>
+                                <option value="hi">हिंदी (Hindi)</option>
+                                <option value="kn">ಕನ್ನಡ (Kannada)</option>
+                                <option value="ml">മലയാളം (Malayalam)</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label"><span data-translate="notificationSettings">Notification Settings</span></label>
+                            <select class="form-control">
+                                <option>All Updates</option>
+                                <option>Patient Updates Only</option>
+                                <option>Disabled</option>
+                            </select>
+                        </div>
+                        <button type="button" class="btn btn--primary">Update Settings</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
